@@ -1,15 +1,11 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-const StyledTitle = styled.div`
-  background-color: pink;
-  font-size: 48px;
-  font-weight: bold;
-`;
-
-const Main = () => {
-  const title = "리액트1";
-  return <StyledTitle>{title}</StyledTitle>;
+const Main = ({ title }) => {
+  return (
+    <div>
+      <h1>안녕하세요, 나는 {title}입니다</h1>/
+    </div>
+  );
 };
 
 export default Main;
