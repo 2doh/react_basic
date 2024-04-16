@@ -48,6 +48,24 @@ export default Main;
 
 - props 값은 컴포넌트 함수의 파라미터로 받아와서 사용할 수 있다.
 - props를 렌더링 할 때는 JSX 내부에서 {} 기호로 감싸준다.
+- Main.js
+
+```js
+import React from "react";
+
+const Main = props => {
+  return (
+    <div>
+      <h1>안녕하세요, 나는{props.title}입니다.</h1>
+    </div>
+  );
+};
+
+export default Main;
+```
+
+### 2.3.2 컴포넌트를 사용할 때 props 값 지정하기
+
 - App.js
 
 ```js
@@ -60,11 +78,10 @@ function App() {
 export default App;
 ```
 
-- Main.js
+### 2.3.3 props 기본값 설정: defaultProps
 
 ```js
 import React from "react";
-import "./react.css";
 
 const Main = props => {
   return (
@@ -74,5 +91,91 @@ const Main = props => {
   );
 };
 
+Main.defaultProps = {
+  title: "기본 이름",
+};
+
 export default Main;
 ```
+
+### 2.3.4 태그 사이의 내용을 보여주는 children
+
+- src/App.js
+
+```js
+import Main from "./Main";
+
+function App() {
+  return <Main>리액트</Main>;
+}
+
+export default App;
+```
+
+- src/Main.js
+
+```js
+import React from "react";
+
+const Main = props => {
+  return (
+    <div>
+      <h1>안녕하세요, 나는{props.title}입니다.</h1>
+      <h2>children 값은 {props.children}입니다.</h2>
+    </div>
+  );
+};
+
+Main.defaultProps = {
+  title: "기본 이름",
+};
+
+export default Main;
+```
+
+### 2.3.5 구조분해할당(비구조화 할당 문법)을 통해 props 내부 값 추출
+
+- https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+- src/Main.js
+
+```js
+import React from "react";
+
+const Main = ({ title, children }) => {
+  return (
+    <div>
+      <h1>안녕하세요, 난 {title}입니다</h1>
+      <h2>children 값은 {children}입니다</h2>
+    </div>
+  );
+};
+
+Main.defaultProps = {
+  title: "기본이름",
+};
+
+export default Main;
+
+// import React from "react";
+
+// const Main = props => {
+//   const { title, children } = props;
+//   return (
+//     <div>
+//       <h1>안녕하세요, 나는 {title}입니다</h1>
+//       <h2>children 값은 {children}입니다</h2>
+//     </div>
+//   );
+// };
+
+// Main.defaultProps = {
+//   title: "기본이름",
+// };
+
+// export default Main;
+```
+
+### 2.3.6 prop Types를 통한 props 검증
+
+- (교재참고)

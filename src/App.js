@@ -1,7 +1,7 @@
 import Main from "./Main";
 
 function App() {
-  return <Main title="리액트" />;
+  return <Main title="react">리액트</Main>;
 }
 
 export default App;
