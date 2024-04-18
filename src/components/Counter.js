@@ -3,8 +3,15 @@ import React, { useEffect, useState } from "react";
 const Counter = () => {
   const [value, setValue] = useState(0);
 
-  useEffect(() => {}, []);
+  console.log("카운터 컴포넌트 렌더링");
 
+  useEffect(() => {
+    console.log("effect");
+    console.log(value);
+    return () => {
+      console.log("cleanup");
+    };
+  }, []);
   return (
     <div>
       <p>
