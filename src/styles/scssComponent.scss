@@ -6,7 +6,7 @@
     background: red;
     cursor: pointer;
     transition: all 0.3s ease-in;
-    // 엠퍼샌드 &는 자기 자신을 뜻함 ex) &.red = .box .red
+
     &.red {
       background: $red;
       @include square(1);
