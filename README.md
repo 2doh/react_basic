@@ -1,133 +1,48 @@
-# 9. axios
+# 10. context API
 
-- `yarn add axios`
+- 리액트 프로젝트에서 전역적으로 사용할 데이터가 있을 때 **유용한 기능**
+- 상태관리 도구는 아님
+- 사용자 로그인 정보, 애플리케이션 환경 설정, 테마 등
 
-# 9.1 axios 로 API 호출해서 데이터 받아오기
+## 10.1 Context API를 사용한 전역 상태 관리 흐름 이해
 
-- https://axios-http.com/kr/
-- https://jsonplaceholder.typicode.com/
+- 최상위 컴포넌트에서 여러 컴포넌트를 거쳐 props로 원하는 상태와 함수를 전달했지만
+- Context API를 사용하면 Context를 만들어서 원하는 값을 받아와서 사용할 수 있다
 
-- src/pages/Axios.js
+## 10.2 Context API 사용법
+
+### 10.2.1 새 Context 만들기
+
+- src/context/color.js
 
 ```js
-import axios from "axios";
-import { useState } from "react";
+import { createContext } from "react";
 
-const Axios = () => {
-  const [data, setData] = useState(null);
+const createContext = createContext({ color: "black" });
+```
 
-  const onClick = () => {
-    console.log("버튼 작동");
-    // axios.get 함수는 파라미터로 전달된 주소에 GET 요청을 해준다.
-    // 그리고 이에 대한 결과는 .then을 통해 비동기적으로 확인할 수 있다.
-    axios.get("https://jsonplaceholder.typicode.com/posts/1").then(response => {
-      setData(response.data);
-    });
-  };
+### 10.2.2 Consumer 사용하기
 
+- 색상을 props로 받아오는 것이 아니라 ColorContext 안에 들어있는 Consumer라는 컴포넌트(내장되어있음)를 통해 색상을 조회한다.
+- src/components/ColorBox.js
+
+```js
+import React from "react";
+import { colorContext } from "../contexts/colorContext";
+
+const ColorBox = () => {
   return (
-    <div>
-      <h2>axios</h2>
-      <div>
-        <button onClick={onClick}>불러오기</button>
-      </div>
-      {data && (
-        <textarea
-          rows={7}
-          readOnly={true}
-          value={JSON.stringify(data, null, 2)}
-        />
+    <colorContext.Consumer>
+      {value => (
+        <div
+          style={{ width: "200px", height: "200px", background: value.color }}
+        ></div>
       )}
-    </div>
+    </colorContext.Consumer>
   );
 };
 
-export default Axios;
+export default ColorBox;
 ```
 
-- async / await 적용
-
-```js
-import axios from "axios";
-import { useState } from "react";
-
-const Axios = () => {
-  const [data, setData] = useState(null);
-
-  const onClick = async () => {
-    console.log("버튼 작동");
-    try {
-      const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts/1",
-      );
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>axios</h2>
-      <div>
-        <button onClick={onClick}>불러오기</button>
-      </div>
-      {data && (
-        <textarea
-          rows={7}
-          readOnly={true}
-          value={JSON.stringify(data, null, 2)}
-        />
-      )}
-    </div>
-  );
-};
-
-export default Axios;
-```
-
-# 9.2 newsapi API 키 발급받기
-
-- https://newsapi.org/register
-- https://newsapi.org/s/south-korea-news-api
-
-- src/pages/Axios.js
-
-```js
-import axios from "axios";
-import { useState } from "react";
-
-const Axios = () => {
-  const [data, setData] = useState(null);
-
-  const onClick = async () => {
-    console.log("버튼 작동");
-    try {
-      const response = await axios.get(
-        "https://newsapi.org/v2/top-headlines?country=kr&apiKey=API_KEY",
-      );
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>axios</h2>
-      <div>
-        <button onClick={onClick}>불러오기</button>
-      </div>
-      {data && (
-        <textarea
-          rows={7}
-          readOnly={true}
-          value={JSON.stringify(data, null, 2)}
-        />
-      )}
-    </div>
-  );
-};
-
-export default Axios;
-```
+### 10.2.3

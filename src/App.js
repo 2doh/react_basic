@@ -1,11 +1,14 @@
 import React from "react";
-import Axios from "./pages/Axios";
+import ColorBox from "./components/ColorBox";
+import { ColorContext } from "./contexts/colorContext";
 
 function App() {
   return (
-    <div>
-      <Axios />
-    </div>
+    <ColorContext.Provider value={{ color: "red" }}>
+      <div>
+        <ColorBox />
+      </div>
+    </ColorContext.Provider>
   );
 }
 
